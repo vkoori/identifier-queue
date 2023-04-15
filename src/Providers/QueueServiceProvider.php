@@ -10,7 +10,11 @@ class QueueServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->mergeConfigFrom(path: dirname(__DIR__, 2) . '/config/identifier-database.php', key: 'queue.connections.identifier-database');
+        /** @var QueueManager $queue */
+        $queue = $this->app['queue'];
+        $queue->addConnector('identifier-database', function () {
+            return new IdentifierDatabaseConnector($this->app['db']);
+        });
 
         if ($this->app->runningInConsole()) {
             $this->commands(commands: [IdentifierTableCommand::class]);
@@ -19,10 +23,14 @@ class QueueServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        /** @var QueueManager $queue */
-        $queue = $this->app['queue'];
-        $queue->addConnector('identifier-database', function () {
-            return new IdentifierDatabaseConnector($this->app['db']);
-        });
+        $this->mergeConfigFrom(path: dirname(__DIR__, 2) . '/config/identifier-database.php', key: 'queue.connections.identifier-database');
+        if ($this->isLumen()) {
+            $this->app->configure(name: 'queue.connections.identifier-database');
+        }
+    }
+
+    private function isLumen(): bool
+    {
+        return get_class(object: app()) == 'Laravel\Lumen\Application';
     }
 }

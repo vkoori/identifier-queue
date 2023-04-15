@@ -7,7 +7,7 @@ if (! function_exists('dispatcher')) {
      * Dispatch a job to its appropriate handler.
      *
      * @param  mixed  $job
-     * @return mixed
+     * @return PendingDispatch
      */
     function dispatcher($job): PendingDispatch
     {
