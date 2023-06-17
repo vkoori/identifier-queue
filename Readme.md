@@ -1,7 +1,3 @@
-> _Note_
->
-> This queue driver is designed for Snappfood interview and only Lumen framework supports it.
-
 ## Installation
 
 ```shell
