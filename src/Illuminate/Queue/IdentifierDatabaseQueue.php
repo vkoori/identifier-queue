@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Kooriv\Queue\Illuminate\Queue;
 
