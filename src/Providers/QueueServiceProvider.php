@@ -8,29 +8,24 @@ use Kooriv\Queue\Illuminate\Queue\Console\IdentifierTableCommand;
 
 class QueueServiceProvider extends ServiceProvider
 {
-    public function register()
+    public function boot(): void
     {
         /** @var QueueManager $queue */
         $queue = $this->app['queue'];
-        $queue->addConnector('identifier-database', function () {
+        $queue->addConnector('identify', function () {
             return new IdentifierDatabaseConnector($this->app['db']);
         });
 
         if ($this->app->runningInConsole()) {
             $this->commands(commands: [IdentifierTableCommand::class]);
         }
-    }
 
-    public function boot(): void
-    {
-        $this->mergeConfigFrom(path: dirname(__DIR__, 2) . '/config/identifier-database.php', key: 'queue.connections.identifier-database');
-        if ($this->isLumen()) {
-            $this->app->configure(name: 'queue.connections.identifier-database');
+        if (isLumen()) {
+            $this->mergeConfigFrom(
+                path: dirname(__DIR__, 2) . '/config/identify.php',
+                key: 'queue.connections.identify'
+            );
+            $this->app->configure(name: 'queue.connections.identify');
         }
-    }
-
-    private function isLumen(): bool
-    {
-        return get_class(object: app()) == 'Laravel\Lumen\Application';
     }
 }

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Kooriv\Queue\Illuminate\Bus\Trait;
 
@@ -26,7 +26,7 @@ trait IdentifierCode
 
     /**
      * Get the desired identifier for the job.
-     * 
+     *
      * @return string|null
      */
     public function getIdentifier(): ?string

@@ -1,12 +1,12 @@
-<?php 
+<?php
 
-namespace Kooriv\Queue\Lumen\Bus;
+namespace Kooriv\Queue\PendingDispatch;
 
-use Laravel\Lumen\Bus\PendingDispatch as LumenPendingDispatch;
+use Illuminate\Foundation\Bus\PendingDispatch as LaravelPendingDispatch;
 
-class PendingDispatch extends LumenPendingDispatch
+class Laravel extends LaravelPendingDispatch
 {
-	/**
+    /**
      * Set the desired identifier for the job.
      *
      * @param  string  $identifier
