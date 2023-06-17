@@ -25,7 +25,7 @@ $app->register(\Kooriv\Queue\Providers\QueueServiceProvider::class);
 Add connection to config/queue.php:
 
 ```shell
-[
+'identify' => [
     'driver' => 'identify',
     'table' => 'identify_jobs',
     'queue' => 'default',
@@ -51,7 +51,7 @@ php artisan migrate
 You can dispatch your jobs in the queue using the helper function below
 
 ```shell
-dispatcher(new ExampleJob)->onConnection("connection")->onQueue("queue")->setIdentifier("identifier");
+dispatcher(new ExampleJob)->onConnection("identify")->onQueue("queue")->setIdentifier("identifier");
 ```
 
 > **Note**
