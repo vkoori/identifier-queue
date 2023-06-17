@@ -8,12 +8,30 @@
 composer require vkoori/identifier-queue
 ```
 
-## Registere service providers
+## Register service providers
+
+### Luemn
 
 Add this lines to `bootstrap/app.php` file.
 
 ```shell
 $app->register(\Kooriv\Queue\Providers\QueueServiceProvider::class);
+```
+
+### Laravel
+
+> For Laravel versions before 5.5 or if not using auto-discovery, register the service provider in config/app.php
+
+Add connection to config/queue.php:
+
+```shell
+[
+    'driver' => 'identify',
+    'table' => 'identify_jobs',
+    'queue' => 'default',
+    'retry_after' => 90,
+    'after_commit' => false,
+]
 ```
 
 ## Create database table
@@ -26,7 +44,7 @@ php artisan migrate
 
 > **Note**
 >
-> This table is fully compatible with the Lumen database driver. So don't be afraid when using this table.
+> This table is fully compatible with the Lumen/Laravel database driver. So don't be afraid when using this table.
 
 ## Dispatching job
 
